@@ -1,4 +1,3 @@
  "rewrites": [
     { "source": "/desafio-secar-em-20-dias", "destination": "/desafio-secar-em-20-dias.html" }
   ]
-}
