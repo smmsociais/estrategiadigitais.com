@@ -1,6 +1,5 @@
 {
 "rewrites": [
-
     { "source": "/", "destination": "/desafio-secar-em-20-dias.html" }
   ]
 }
