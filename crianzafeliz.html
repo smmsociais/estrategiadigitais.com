@@ -91,6 +91,11 @@
             cursor: pointer;
             width: 100%;
             margin: 20px 0;
+            transition: background-color 0.3s ease;
+        }
+        
+        .add-to-cart:hover {
+            background: #35a845;
         }
         
         .offer-timer {
@@ -153,6 +158,14 @@
             align-items: center;
         }
         
+        .faq-answer {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        
         @media (max-width: 768px) {
             .product-grid {
                 grid-template-columns: 1fr;
@@ -162,6 +175,22 @@
             .reviews-grid {
                 grid-template-columns: 1fr;
             }
+        }
+        
+        /* Estilo para el texto de la oferta con animación de pulso */
+        .static-coupon-offer {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #111111;
+            margin: 15px 0;
+            animation: pulse-animation 2s infinite;
+        }
+
+        @keyframes pulse-animation {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
@@ -201,14 +230,14 @@
                     <div>MINUTOS SEGUNDOS</div>
                 </div>
                 
-                <button class="add-to-cart">Agregar al carrito</button>
+                <button class="add-to-cart" id="checkout-button">Agregar al carrito</button>
                 
                 <!-- Garantía -->
                 <details class="faq-item">
                     <summary class="faq-question">
                         Garantía del corazón: Nuestra promesa como madres y padres
                     </summary>
-                    <div style="margin-top: 10px;">
+                    <div class="faq-answer">
                         <h3>✨ Probalo 7 días, y si no sentís un cambio... te devolvemos tu dinero.</h3>
                         <p>Tenés 7 días para probar este kit, aplicarlo en tu hogar y ver si realmente te ayuda.</p>
                     </div>
@@ -259,35 +288,35 @@
         
         <div class="faq-item">
             <div class="faq-question">🤔 ¿Qué incluye exactamente este Mega Kit de Crianza Positiva?</div>
-            <div style="margin-top: 10px;">
+            <div class="faq-answer">
                 <p>Incluye +25 rutinas visuales, checklist diario, cuentos con valores, tableros de rutina, control de tiempo visual, guías prácticas y más.</p>
             </div>
         </div>
         
         <div class="faq-item">
             <div class="faq-question">⌛️ ¿Cuándo voy a recibir el producto?</div>
-            <div style="margin-top: 10px;">
+            <div class="faq-answer">
                 <p>Recibirás el archivo digital en formato PDF en menos de 5 minutos tras la compra.</p>
             </div>
         </div>
         
         <div class="faq-item">
             <div class="faq-question">👉🏽 ¿Cómo funciona este kit?</div>
-            <div style="margin-top: 10px;">
+            <div class="faq-answer">
                 <p>Usás rutinas visuales con imágenes claras que los niños entienden al instante, permitiéndoles saber qué hacer sin recordatorios constantes.</p>
             </div>
         </div>
         
         <div class="faq-item">
             <div class="faq-question">👶🏼 ¿Desde qué edad se puede usar?</div>
-            <div style="margin-top: 10px;">
+            <div class="faq-answer">
                 <p>Ideal desde los 2 hasta los 10 años, pero si tu hijo entiende dibujos simples, ya podés empezar.</p>
             </div>
         </div>
         
         <div class="faq-item">
             <div class="faq-question">😓 ¿Y si no me gusta? ¿Puedo pedir devolución?</div>
-            <div style="margin-top: 10px;">
+            <div class="faq-answer">
                 <p>Sí, tenés 7 días para probarlo y si no sentís un cambio, te devolvemos el 100% sin preguntas.</p>
             </div>
         </div>
@@ -317,6 +346,11 @@
                 const content = question.nextElementSibling;
                 content.style.display = content.style.display === 'block' ? 'none' : 'block';
             });
+        });
+        
+        // Redirección al checkout de Hotmart
+        document.getElementById('checkout-button').addEventListener('click', function() {
+            window.location.href = 'https://pay.hotmart.com/O102627628C?bid=1761573883269';
         });
     </script>
 </body>
