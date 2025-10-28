@@ -5,6 +5,36 @@
     <meta charset="UTF-8">
     <title>45 Dinâmicas com Sentido para Crisma e Grupos de Jovens – Editora Católica</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta Pixel Code -->
+  <script>
+    !function (f, b, e, v, n, t, s) {
+      if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments) };
+      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = [];
+      t = b.createElement(e); t.async = !0; t.src = v;
+      s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+    }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '678084052018335');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=678084052018335&ev=PageView&noscript=1" /></noscript>
+  <!-- End Meta Pixel Code -->
+   
+<script type="text/javascript">
+	function importHotmart(){ 
+ 		var imported = document.createElement('script'); 
+ 		imported.src = 'https://static.hotmart.com/checkout/widget.min.js'; 
+ 		document.head.appendChild(imported); 
+		var link = document.createElement('link'); 
+		link.rel = 'stylesheet'; 
+		link.type = 'text/css'; 
+		link.href = 'https://static.hotmart.com/css/hotmart-fb.min.css'; 
+		document.head.appendChild(link);	} 
+ 	importHotmart(); 
+ </script> 
+ <a onclick="return false;" href="https://pay.hotmart.com/E102657005O?checkoutMode=2&off=8p7z8vqn" class="hotmart-fb hotmart__button-checkout">Comprar Agora</a> 
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -152,7 +182,7 @@
                         <li>45 DINÂMICAS COM SENTIDO PARA CRISMA</li>
                         <li>6 Meses de Acesso</li>
                     </ul>
-                    <a href="https://checkout.editoracatolicaluz.com.br/61300742" class="button">QUERO ESSA OPÇÃO!</a>
+                    <a href="https://pay.hotmart.com/E102657005O?off=8p7z8vqn" class="button">QUERO ESSA OPÇÃO!</a>
                 </div>
 
                 <div style="background: #fffacd; padding: 30px; border-radius: 10px; border: 2px solid #ffd700;">
@@ -197,7 +227,68 @@
                     o valor.</p>
             </div>
         </section>
-    </div>
+  <!-- Scripts adicionales -->
+  <script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-subids async defer></script>
+
+  <script>
+    window.pixelId = "6900a65e7bbd6a6ed22d3700";
+    var a = document.createElement("script");
+    a.setAttribute("async", "");
+    a.setAttribute("defer", "");
+    a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+    document.head.appendChild(a);
+  </script>
+
+  <script>
+    // Timer simple
+    let duration = 15 * 60;
+    const timerElement = document.querySelector('.timer');
+
+    function startTimer() {
+      let timer = setInterval(function () {
+        const minutes = Math.floor(Math.max(0, duration) / 60);
+        const seconds = Math.max(0, duration) % 60;
+        timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        if (--duration < 0) {
+          clearInterval(timer);
+        }
+      }, 1000);
+    }
+
+    startTimer();
+
+    // FAQ toggle
+    document.querySelectorAll('.faq-question').forEach(question => {
+      question.addEventListener('click', () => {
+        const content = question.nextElementSibling;
+        content.style.display = content.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+
+    // Evento de conversión para Meta Pixel
+    document.addEventListener('DOMContentLoaded', function () {
+      const checkoutBtn = document.querySelector('.hotmart__button-checkout');
+      if (!checkoutBtn) return;
+
+      checkoutBtn.addEventListener('click', function (e) {
+        // Evento de iniciação de checkout
+        if (typeof fbq !== 'undefined') {
+          fbq('track', 'InitiateCheckout');
+        } else {
+          // fallback simple: aguarda la disponibilidad del fbq por 200ms
+          const tryFbq = () => {
+            if (typeof fbq !== 'undefined') {
+              fbq('track', 'InitiateCheckout');
+            } else {
+              // intenta nuevamente una vez
+              setTimeout(() => { if (typeof fbq !== 'undefined') fbq('track', 'InitiateCheckout'); }, 200);
+            }
+          };
+          tryFbq();
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>
