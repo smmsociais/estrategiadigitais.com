@@ -13,7 +13,7 @@
   <meta property="og:image" content="https://crianzafeliz.online/cdn/shop/files/Diseno_sin_titulo.png?v=1749603985">
   <meta property="og:url" content="https://crianzafeliz.online/products/libro">
 
-  <!-- Meta Pixel Code (colocado en el head antes de otros scripts) -->
+  <!-- Meta Pixel Code -->
   <script>
     !function (f, b, e, v, n, t, s) {
       if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments) };
@@ -28,8 +28,36 @@
       src="https://www.facebook.com/tr?id=678084052018335&ev=PageView&noscript=1" /></noscript>
   <!-- End Meta Pixel Code -->
 
-  <!-- Estilos básicos -->
+  <!-- Script de Hotmart -->
+  <script type="text/javascript">
+    function importHotmart(){ 
+      var imported = document.createElement('script'); 
+      imported.src = 'https://static.hotmart.com/checkout/widget.min.js'; 
+      document.head.appendChild(imported); 
+      var link = document.createElement('link'); 
+      link.rel = 'stylesheet'; 
+      link.type = 'text/css'; 
+      link.href = 'https://static.hotmart.com/css/hotmart-fb.min.css'; 
+      document.head.appendChild(link);	
+    } 
+    importHotmart(); 
+  </script> 
+
+  <!-- Estilos optimizados -->
   <style>
+    :root {
+      --primary-color: #40C350;
+      --primary-hover: #35a845;
+      --accent-color: #E74C3C;
+      --dark-color: #2B2B2B;
+      --light-color: #fff;
+      --gray-light: #f9f9f9;
+      --gray-medium: #666;
+      --gray-dark: #333;
+      --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      --border-radius: 10px;
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -38,8 +66,9 @@
 
     body {
       font-family: Arial, sans-serif;
-      background: #fff;
-      color: #333;
+      background: var(--light-color);
+      color: var(--gray-dark);
+      line-height: 1.6;
     }
 
     img {
@@ -79,30 +108,30 @@
 
     .product-image img {
       width: 100%;
-      border-radius: 10px;
+      border-radius: var(--border-radius);
     }
 
     .product-info h1 {
       font-size: 2rem;
       margin-bottom: 10px;
-      color: #2B2B2B;
+      color: var(--dark-color);
     }
 
     .vendor {
-      color: #666;
+      color: var(--gray-medium);
       margin-bottom: 15px;
     }
 
     .price {
       font-size: 1.5rem;
       font-weight: bold;
-      color: #E74C3C;
+      color: var(--accent-color);
       margin: 15px 0;
     }
 
     .original-price {
       text-decoration: line-through;
-      color: #999;
+      color: var(--gray-medium);
       font-size: 1.2rem;
     }
 
@@ -116,8 +145,8 @@
       margin: 10px 0;
     }
 
-    .add-to-cart {
-      background: #40C350;
+    .hotmart-fb {
+      background: var(--primary-color);
       color: white;
       border: none;
       padding: 15px 30px;
@@ -127,10 +156,13 @@
       width: 100%;
       margin: 20px 0;
       transition: background-color 0.3s ease;
+      text-align: center;
+      text-decoration: none;
+      display: block;
     }
 
-    .add-to-cart:hover {
-      background: #35a845;
+    .hotmart-fb:hover {
+      background: var(--primary-hover);
     }
 
     .offer-timer {
@@ -166,8 +198,8 @@
     .review-card {
       background: white;
       padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
     }
 
     .review-stars {
@@ -197,19 +229,8 @@
       display: none;
       margin-top: 10px;
       padding: 10px;
-      background: #f9f9f9;
+      background: var(--gray-light);
       border-radius: 5px;
-    }
-
-    @media (max-width: 768px) {
-      .product-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-      }
-
-      .reviews-grid {
-        grid-template-columns: 1fr;
-      }
     }
 
     /* Estilo para el texto de la oferta con animación de pulso */
@@ -233,6 +254,26 @@
 
       100% {
         transform: scale(1);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .product-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .reviews-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .product-info h1 {
+        font-size: 1.5rem;
+      }
+      
+      .timer {
+        font-size: 2rem;
       }
     }
   </style>
@@ -277,7 +318,8 @@
           <div>MINUTOS SEGUNDOS</div>
         </div>
 
-        <button class="add-to-cart" id="checkout-button">Agregar al carrito</button>
+        <!-- Botón de Hotmart reemplazando el anterior -->
+        <a onclick="return false;" href="https://pay.hotmart.com/O102627628C?checkoutMode=2&off=28kym9i5" class="hotmart-fb hotmart__button-checkout">Comprar Agora</a>
 
         <!-- Garantía -->
         <details class="faq-item">
@@ -416,7 +458,7 @@
 
     // Evento de conversión para Meta Pixel
     document.addEventListener('DOMContentLoaded', function () {
-      const checkoutBtn = document.getElementById('checkout-button');
+      const checkoutBtn = document.querySelector('.hotmart__button-checkout');
       if (!checkoutBtn) return;
 
       checkoutBtn.addEventListener('click', function (e) {
@@ -435,9 +477,6 @@
           };
           tryFbq();
         }
-
-        // redirección a Hotmart (si este es el flujo)
-        window.location.href = 'https://pay.hotmart.com/O102627628C?bid=1761573883269';
       });
     });
   </script>
