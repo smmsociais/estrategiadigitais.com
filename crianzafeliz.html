@@ -13,6 +13,21 @@
   <meta property="og:image" content="https://crianzafeliz.online/cdn/shop/files/Diseno_sin_titulo.png?v=1749603985">
   <meta property="og:url" content="https://crianzafeliz.online/products/libro">
 
+  <!-- Meta Pixel Code (colocado en el head antes de otros scripts) -->
+  <script>
+    !function(f,b,e,v,n,t,s){
+      if(f.fbq) return; n=f.fbq=function(){ n.callMethod? n.callMethod.apply(n,arguments): n.queue.push(arguments) };
+      if(!f._fbq) f._fbq=n; n.push=n; n.loaded=!0; n.version='2.0'; n.queue=[];
+      t=b.createElement(e); t.async=!0; t.src=v;
+      s=b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t,s);
+    }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '678084052018335');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=678084052018335&ev=PageView&noscript=1"/></noscript>
+  <!-- End Meta Pixel Code -->
+
   <!-- Estilos básicos -->
   <style>
     * {
@@ -361,36 +376,17 @@
     </div>
   </section>
 
-  <!-- Meta Pixel Code -->
-  <script>
-    !function (f, b, e, v, n, t, s) {
-      if (f.fbq) return; n = f.fbq = function () {
-        n.callMethod ?
-        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-      };
-      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
-      n.queue = []; t = b.createElement(e); t.async = !0;
-      t.src = v; s = b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t, s)
-    }(window, document, 'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '678084052018335');
-    fbq('track', 'PageView');
-  </script>
-  <noscript><img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=678084052018335&ev=PageView&noscript=1" /></noscript>
-  <!-- End Meta Pixel Code -->
-
+  <!-- Scripts adicionales -->
   <script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-subids async defer></script>
 
   <script>
-  window.pixelId = "6900a65e7bbd6a6ed22d3700";
-  var a = document.createElement("script");
-  a.setAttribute("async", "");
-  a.setAttribute("defer", "");
-  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-  document.head.appendChild(a);
-</script>
+    window.pixelId = "6900a65e7bbd6a6ed22d3700";
+    var a = document.createElement("script");
+    a.setAttribute("async", "");
+    a.setAttribute("defer", "");
+    a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+    document.head.appendChild(a);
+  </script>
 
   <script>
     // Timer simple
@@ -418,9 +414,31 @@
       });
     });
 
-    // Redirección al checkout de Hotmart
-    document.getElementById('checkout-button').addEventListener('click', function () {
-      window.location.href = 'https://pay.hotmart.com/O102627628C?bid=1761573883269';
+    // Evento de conversión para Meta Pixel
+    document.addEventListener('DOMContentLoaded', function() {
+      const checkoutBtn = document.getElementById('checkout-button');
+      if (!checkoutBtn) return;
+
+      checkoutBtn.addEventListener('click', function(e) {
+        // Evento de iniciação de checkout
+        if (typeof fbq !== 'undefined') {
+          fbq('track', 'InitiateCheckout');
+        } else {
+          // fallback simple: aguarda la disponibilidad del fbq por 200ms
+          const tryFbq = () => {
+            if (typeof fbq !== 'undefined') {
+              fbq('track', 'InitiateCheckout');
+            } else {
+              // intenta nuevamente una vez
+              setTimeout(() => { if (typeof fbq !== 'undefined') fbq('track', 'InitiateCheckout'); }, 200);
+            }
+          };
+          tryFbq();
+        }
+
+        // redirección a Hotmart (si este es el flujo)
+        window.location.href = 'https://pay.hotmart.com/O102627628C?bid=1761573883269';
+      });
     });
   </script>
 </body>
