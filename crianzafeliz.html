@@ -15,17 +15,17 @@
 
   <!-- Meta Pixel Code (colocado en el head antes de otros scripts) -->
   <script>
-    !function(f,b,e,v,n,t,s){
-      if(f.fbq) return; n=f.fbq=function(){ n.callMethod? n.callMethod.apply(n,arguments): n.queue.push(arguments) };
-      if(!f._fbq) f._fbq=n; n.push=n; n.loaded=!0; n.version='2.0'; n.queue=[];
-      t=b.createElement(e); t.async=!0; t.src=v;
-      s=b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t,s);
+    !function (f, b, e, v, n, t, s) {
+      if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments) };
+      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = [];
+      t = b.createElement(e); t.async = !0; t.src = v;
+      s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
     }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '678084052018335');
     fbq('track', 'PageView');
   </script>
   <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=678084052018335&ev=PageView&noscript=1"/></noscript>
+      src="https://www.facebook.com/tr?id=678084052018335&ev=PageView&noscript=1" /></noscript>
   <!-- End Meta Pixel Code -->
 
   <!-- Estilos básicos -->
@@ -262,11 +262,11 @@
         <h1>Mega Kit de Crianza Positiva</h1>
 
         <div class="price">
-          <span class="original-price">34,00 €</span>
-          17,00 €
+          <span class="original-price" 90,00 €</span>
+          5,00 €
         </div>
 
-        <div class="badge">🎁 Oferta -50% OFF sólo 20 Cupos</div>
+        <div class="badge">🎁 Oferta -94% OFF sólo 20 Cupos</div>
 
         <p class="static-coupon-offer">⚡️¡Últimos 3 Cúpos en Oferta!⚡️</p>
 
@@ -415,11 +415,11 @@
     });
 
     // Evento de conversión para Meta Pixel
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       const checkoutBtn = document.getElementById('checkout-button');
       if (!checkoutBtn) return;
 
-      checkoutBtn.addEventListener('click', function(e) {
+      checkoutBtn.addEventListener('click', function (e) {
         // Evento de iniciação de checkout
         if (typeof fbq !== 'undefined') {
           fbq('track', 'InitiateCheckout');
