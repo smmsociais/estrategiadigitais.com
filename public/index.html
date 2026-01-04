@@ -72,15 +72,27 @@ async function tick() {
     document.getElementById("btc").innerText = btc.toFixed(6);
     document.getElementById("usdt").innerText = usdt.toFixed(2);
 
-    // Atualiza histórico
-    const linhas = [];
-    if (data.valorInicial) {
-      linhas.push(`Inicial: ${data.valorInicial.data} | USDT ${data.valorInicial.usdt.toFixed(2)}`);
-    }
-    if (data.valorMaximo) {
-      linhas.push(`Máximo:  ${data.valorMaximo.data} | USDT ${data.valorMaximo.usdt.toFixed(2)}`);
-    }
-    document.getElementById("historico").innerText = linhas.join("\n");
+// Atualiza histórico
+const linhas = [];
+
+if (data.valorInicial) {
+  linhas.push(
+    `Inicial: ${formatarData(data.valorInicial.data)} | ` +
+    `USDT ${data.valorInicial.usdt.toFixed(2)} | ` +
+    `BTC ${data.valorInicial.preco.toFixed(2)}`
+  );
+}
+
+if (data.valorMaximo) {
+  linhas.push(
+    `Máximo:  ${formatarData(data.valorMaximo.data)} | ` +
+    `USDT ${data.valorMaximo.usdt.toFixed(2)} | ` +
+    `BTC ${data.valorMaximo.preco.toFixed(2)}`
+  );
+}
+
+document.getElementById("historico").innerText =
+  linhas.length ? linhas.join("\n") : "---";
 
   } catch (e) {
     console.error("tick error:", e);
@@ -99,9 +111,21 @@ async function resetarSaldo() {
   }
 }
 
+function formatarData(dataStr) {
+  const d = new Date(dataStr);
+  return d.toLocaleString("pt-BR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit"
+  });
+}
+
 // Inicializa
 tick();
-setInterval(tick, 100); // Atualiza a cada 3 segundos
+setInterval(tick, 100);
 </script>
 
 </body>
