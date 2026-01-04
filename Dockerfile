@@ -1,3 +1,15 @@
-FROM pierrezemb/gostatic
-COPY . /srv/http/
-CMD ["-port","8080","-https-promote", "-enable-logging"]
+FROM node:22-slim
+
+WORKDIR /app
+
+COPY package.json package-lock.json* ./
+RUN npm install --production
+
+COPY . .
+
+ENV NODE_ENV=production
+ENV PORT=3000
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]
