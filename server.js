@@ -131,6 +131,8 @@ app.get("*", (req, res) => {
 });
 
 /* ---------- start ---------- */
-app.listen(PORT, () => {
-  console.log("Servidor rodando na porta", PORT);
+const HOST = "0.0.0.0";
+
+app.listen(PORT, HOST, () => {
+  console.log(`Servidor rodando em http://${HOST}:${PORT}`);
 });
