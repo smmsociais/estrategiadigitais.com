@@ -1,9 +1,13 @@
 {
+  "crons": [
+    {
+      "path": "/api/update",
+      "schedule": "*/1 * * * *"
+    }
+  ]
+}
+{
 "rewrites": [
-    { "source": "/", "destination": "/desafio-secar-em-20-dias.html" },
-    { "source": "/desafio-secar-em-20-dias", "destination": "/desafio-secar-em-20-dias.html" },
-    { "source": "/crianzafeliz", "destination": "/crianzafeliz.html" },
-    { "source": "/suaeditoracatolica", "destination": "/suaeditoracatolica.html" },
-    { "source": "/instagram", "destination": "/instagram.html" }
+    { "source": "/", "destination": "/index.html" }
   ]
 }
