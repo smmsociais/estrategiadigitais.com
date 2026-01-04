@@ -1,4 +1,3 @@
-import axios from "axios";
 import { getDb } from "../lib/mongo.js";
 
 export default async function handler(req, res) {
@@ -6,12 +5,23 @@ export default async function handler(req, res) {
     const db = await getDb();
     const col = db.collection("simulacoes");
 
-    const { data } = await axios.get(
+    const r = await fetch(
       "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT",
-      { timeout: 5000 }
+      {
+        method: "GET",
+        cache: "no-store",
+        headers: {
+          "User-Agent": "Mozilla/5.0"
+        }
+      }
     );
 
-    const precoBTC = parseFloat(data.price);
+    if (!r.ok) {
+      throw new Error("Binance HTTP " + r.status);
+    }
+
+    const json = await r.json();
+    const precoBTC = Number(json.price);
 
     let doc = await col.findOne({ _id: "btc-usdt-sim" });
 
@@ -67,7 +77,7 @@ export default async function handler(req, res) {
     });
 
   } catch (e) {
-    console.error("tick error:", e.message);
-    res.status(500).json({ error: "tick failed" });
+    console.error("tick error:", e);
+    res.status(500).json({ error: e.message });
   }
 }
