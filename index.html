@@ -64,64 +64,41 @@
 
     <button onclick="resetarSaldo()">🔄 Reiniciar saldo</button>
 
-    <script>
-        async function carregarEstado() {
-            try {
-                const res = await fetch("/api/state");
-                const data = await res.json();
+<script>
+async function tick() {
+  const res = await fetch("/api/tick");
+  const data = await res.json();
 
-                if (!data) return;
+  document.getElementById("price").innerText =
+    data.precoBTC.toFixed(2);
 
-                // preço exibido = preço atual do backend
-                const precoBTC =
-                    data.valorMaximo?.preco ||
-                    data.valorInicial?.preco ||
-                    0;
+  document.getElementById("btc").innerText =
+    data.saldoBTC.toFixed(6);
 
-                const saldoBTC = data.saldoBTC || 0;
-                const saldoUSDT = saldoBTC * precoBTC;
+  document.getElementById("usdt").innerText =
+    (data.saldoBTC * data.precoBTC).toFixed(2);
 
-                document.getElementById("price").innerText =
-                    precoBTC.toFixed(2);
+  const linhas = [];
 
-                document.getElementById("btc").innerText =
-                    saldoBTC.toFixed(6);
+  if (data.valorInicial) {
+    linhas.push(
+      `Inicial: ${data.valorInicial.data} | USDT ${data.valorInicial.usdt.toFixed(2)}`
+    );
+  }
 
-                document.getElementById("usdt").innerText =
-                    saldoUSDT.toFixed(2);
+  if (data.valorMaximo) {
+    linhas.push(
+      `Máximo:  ${data.valorMaximo.data} | USDT ${data.valorMaximo.usdt.toFixed(2)}`
+    );
+  }
 
-                const linhas = [];
+  document.getElementById("historico").innerText =
+    linhas.join("\n");
+}
 
-                if (data.valorInicial) {
-                    linhas.push(
-                        `Inicial: ${data.valorInicial.data} | USDT ${data.valorInicial.usdt.toFixed(2)} | BTC ${data.valorInicial.preco.toFixed(2)}`
-                    );
-                }
-
-                if (data.valorMaximo) {
-                    linhas.push(
-                        `Máximo:  ${data.valorMaximo.data} | USDT ${data.valorMaximo.usdt.toFixed(2)} | BTC ${data.valorMaximo.preco.toFixed(2)}`
-                    );
-                }
-
-                document.getElementById("historico").innerText =
-                    linhas.length ? linhas.join("\n") : "---";
-
-            } catch (e) {
-                console.error("Erro ao carregar estado:", e);
-            }
-        }
-
-        async function resetarSaldo() {
-            if (!confirm("Reiniciar saldo e histórico?")) return;
-
-            await fetch("/api/reset", { method: "POST" });
-            await carregarEstado();
-        }
-
-        carregarEstado();
-        setInterval(carregarEstado, 5000);
-    </script>
+tick();
+setInterval(tick, 3000);
+</script>
 
 </body>
 </html>
