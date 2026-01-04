@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulador BTC</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #111;
+            color: #0f0;
+            padding: 20px;
+            font-size: 18px;
+        }
+
+        p {
+            font-size: 50px;
+            margin: 10px 0;
+        }
+
+        button {
+            padding: 12px 20px;
+            margin: 8px;
+            font-size: 16px;
+            background: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #222;
+        }
+
+        .historico {
+            margin-top: 20px;
+            font-size: 50px;
+            white-space: pre-line;
+            background: #000;
+            padding: 15px;
+            border: 1px solid #0f0;
+            margin-bottom: 20px;
+        }
+
+        .saldo-container {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <p>Preço BTC: <span id="price">---</span> USDT</p>
+
+    <div class="saldo-container">
+        <p>Saldo BTC: <b id="btc">---</b></p>
+        <p>Saldo USDT: <b id="usdt">---</b></p>
+    </div>
+
+    <div class="historico">
+        <b>Histórico:</b>
+        <div id="historico">---</div>
+    </div>
+
+    <button onclick="resetarSaldo()">🔄 Reiniciar saldo</button>
+
+    <script>
+        async function carregarEstado() {
+            try {
+                const res = await fetch("/api/state");
+                const data = await res.json();
+
+                if (!data) return;
+
+                // preço exibido = preço atual do backend
+                const precoBTC =
+                    data.valorMaximo?.preco ||
+                    data.valorInicial?.preco ||
+                    0;
+
+                const saldoBTC = data.saldoBTC || 0;
+                const saldoUSDT = saldoBTC * precoBTC;
+
+                document.getElementById("price").innerText =
+                    precoBTC.toFixed(2);
+
+                document.getElementById("btc").innerText =
+                    saldoBTC.toFixed(6);
+
+                document.getElementById("usdt").innerText =
+                    saldoUSDT.toFixed(2);
+
+                const linhas = [];
+
+                if (data.valorInicial) {
+                    linhas.push(
+                        `Inicial: ${data.valorInicial.data} | USDT ${data.valorInicial.usdt.toFixed(2)} | BTC ${data.valorInicial.preco.toFixed(2)}`
+                    );
+                }
+
+                if (data.valorMaximo) {
+                    linhas.push(
+                        `Máximo:  ${data.valorMaximo.data} | USDT ${data.valorMaximo.usdt.toFixed(2)} | BTC ${data.valorMaximo.preco.toFixed(2)}`
+                    );
+                }
+
+                document.getElementById("historico").innerText =
+                    linhas.length ? linhas.join("\n") : "---";
+
+            } catch (e) {
+                console.error("Erro ao carregar estado:", e);
+            }
+        }
+
+        async function resetarSaldo() {
+            if (!confirm("Reiniciar saldo e histórico?")) return;
+
+            await fetch("/api/reset", { method: "POST" });
+            await carregarEstado();
+        }
+
+        carregarEstado();
+        setInterval(carregarEstado, 5000);
+    </script>
+
+</body>
+</html>
