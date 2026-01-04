@@ -42,7 +42,7 @@ app.get("/api/tick", async (req, res) => {
         _id: "btc-usdt-sim",
         saldoBTC,
         valorInicial: {
-          data: new Date().toLocaleString(),
+          data: new Date(),
           usdt: 10000,
           preco: precoBTC
         },
@@ -64,7 +64,7 @@ app.get("/api/tick", async (req, res) => {
         {
           $set: {
             valorMaximo: {
-              data: new Date().toLocaleString(),
+              data: new Date(),
               usdt: saldoUSDT,
               preco: precoBTC
             },
@@ -107,7 +107,7 @@ app.post("/api/reset", async (req, res) => {
         $set: {
           saldoBTC,
           valorInicial: {
-            data: new Date().toLocaleString(),
+            data: new Date(),
             usdt: 10000,
             preco: precoBTC
           },
