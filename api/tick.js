@@ -2,13 +2,6 @@ import axios from "axios";
 import { getDb } from "../lib/mongo.js";
 
 export default async function handler(req, res) {
-
-  const token = req.headers["x-cron-token"];
-
-  if (token !== process.env.CRON_TOKEN) {
-    return res.status(401).json({ error: "unauthorized" });
-  }
-
   try {
     const db = await getDb();
     const col = db.collection("simulacoes");
